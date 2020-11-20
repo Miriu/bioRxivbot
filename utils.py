@@ -1,28 +1,51 @@
 import requests
 from datetime import date, timedelta
 import sqlite3
+import math
 
 def get_papers():
-    today = date.today()
-    yesterday = today - timedelta(days = 1)
-    papers = requests.get("https://api.biorxiv.org/details/biorxiv/" + str(yesterday) + "/" + str(yesterday))
-    papers_dic = papers.json()
-    connection = None
-    connection = sqlite3.connect('tweetbot.db')
-    cursor = connection.cursor()
-    cursor.execute('''drop table if exists yesterday_pubs''')
-    cursor.execute('''CREATE TABLE 'yesterday_pubs'
-                    ('doi', 'title','authors', 'author_corresponding', 
-                    'author_corresponding_institution', 'date', 
-                    'version', 'type','license','category','abstract','published','server')''')
-    for child in papers_dic['collection']:
-        cursor.execute('INSERT INTO yesterday_pubs VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', 
-                    (child['doi'], child['title'], child['authors'], child['author_corresponding'], 
-                    child['author_corresponding_institution'], child['date'], 
-                    child['version'], child['type'], child['license'], 
-                    child['category'],child['abstract'],child['published'],child['server']))
-    connection.commit()
-    print(cursor.fetchall())
+     today = date.today()
+     yesterday = today - timedelta(days = 1)
+     papers = requests.get("https://api.biorxiv.org/details/biorxiv/" + str(yesterday) + "/" + str(yesterday))
+     papers_dic = papers.json()
+     connection = None
+     connection = sqlite3.connect('tweetbot.db')
+     cursor = connection.cursor()
+     cursor.execute('''DROP TABLE if exists yesterday_pubs''')
+     cursor.execute('''CREATE TABLE 'yesterday_pubs'
+                         ('doi', 'title','authors', 'author_corresponding', 
+                         'author_corresponding_institution', 'date', 
+                         'version', 'type','license','category','abstract','published','server')''')
+     for child in papers_dic['collection']:
+          cursor.execute('INSERT INTO yesterday_pubs VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', 
+                         (child['doi'], child['title'], child['authors'], child['author_corresponding'], 
+                         child['author_corresponding_institution'], child['date'], 
+                         child['version'], child['type'], child['license'], 
+                         child['category'],child['abstract'],child['published'],child['server']))
+     connection.commit()
+     pap = papers_dic['messages']
+     print(pap)
+     pepe = pap[0]
+     for key,value in pepe.items():
+          if key == 'total':
+               n_papers =  value
+     if n_papers > 100:
+          total_loops = math.floor(n_papers/100)
+          start = 101
+          for n in range(total_loops):
+               papers = requests.get("https://api.biorxiv.org/details/biorxiv/" + str(yesterday) + "/" + str(yesterday) + '/' + str(start))
+               start += 100
+               papers_dic = papers.json()
+               connection = sqlite3.connect('tweetbot.db')
+               cursor = connection.cursor()
+               for child in papers_dic['collection']:
+                    cursor.execute('INSERT INTO yesterday_pubs VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', 
+                                   (child['doi'], child['title'], child['authors'], child['author_corresponding'], 
+                                   child['author_corresponding_institution'], child['date'], 
+                                   child['version'], child['type'], child['license'], 
+                                   child['category'],child['abstract'],child['published'],child['server']))
+               connection.commit()
+               start += 100
 
 def load_keywords():
      with open('search.txt') as f:
@@ -47,7 +70,6 @@ def load_keywords():
 
 
 def read_from_database():
-     retrived = []
      connection = sqlite3.connect('tweetbot.db')
      cursor = connection.cursor()
      keywords = load_keywords()

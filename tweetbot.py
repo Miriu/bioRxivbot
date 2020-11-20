@@ -1,7 +1,7 @@
 import requests
 from datetime import date, timedelta
 import sqlite3
-from utils import read_from_database
+from utils import read_from_database, get_papers
 import tweepy
 
 
@@ -21,13 +21,13 @@ def tweet_login():
 
 
 def search_and_tweet():
+     get_papers()
      now = read_from_database()
      for line in now:
           doi = line[0]
           title = line[1]
           version = line[2]
           link = "https://www.biorxiv.org/content/" + doi +'v' + version
-          print(title)
           n_char = len(title) + len(link)
           if n_char > 139:
                max_title_length = 136 - len(link)
