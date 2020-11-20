@@ -6,7 +6,8 @@ __pycache__/
 
 .ipynb_checkpoints/*
 .vscode/*
-.ipynb
+*.ipynb
+temp.txt
 
 # C extensions
 *.so

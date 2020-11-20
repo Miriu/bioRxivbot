@@ -3,6 +3,7 @@ from datetime import date, timedelta
 import sqlite3
 from utils import read_from_database, get_papers
 import tweepy
+import time
 
 
 def tweet_login():
@@ -11,7 +12,7 @@ def tweet_login():
           creds = [i.strip() for i in f.readlines()]
           auth = tweepy.OAuthHandler(creds[0], creds[1])
           auth.set_access_token(creds[2], creds[3])
-          api = tweepy.API(auth, , wait_on_rate_limit=True,
+          api = tweepy.API(auth, wait_on_rate_limit=True,
                               wait_on_rate_limit_notify=True)
           try:
                api.verify_credentials()
@@ -23,6 +24,7 @@ def tweet_login():
 def search_and_tweet():
      get_papers()
      now = read_from_database()
+     api = tweet_login()
      for line in now:
           doi = line[0]
           title = line[1]
@@ -30,14 +32,18 @@ def search_and_tweet():
           link = "https://www.biorxiv.org/content/" + doi +'v' + version
           n_char = len(title) + len(link)
           if n_char > 139:
-               max_title_length = 136 - len(link)
+               max_title_length = 106 - len(link)
                _title = title[:max_title_length]
                final_title = _title + '...'
           else:
                final_title = title
-          tweet(final_title, link)
+          with open('temp.txt', 'w') as f:
+               f.write(final_title + '\n' + link)
+          try:
+               with open('temp.txt', 'r') as f:
+                    api.update_status(f.read())
+                    f.close()
+          except:
+               pass
+          time.sleep(1)
 
-
-def tweet(title, link):
-     tweet_login()
-     api.update_status(title, link)
