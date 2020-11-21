@@ -4,13 +4,14 @@ __pycache__/
 
 # ours
 
-.ipynb_checkpoints/*
-.vscode/*
+.ipynb_checkpoints
+.vscode
 *.ipynb
-*.db
+biorxivbot/*.db
 tweetbot.db
 temp.txt
 activity.log
+*.db
 
 # C extensions
 *.so
