@@ -1,9 +1,9 @@
-# **biorXivbot**
+# **bioRxivbot**
 
 A twitter bot from [@MiriukaLab](https://twitter.com/MiriukaLab) for filtering just published  [@bioRxivpreprint](https://twitter.com/biorxivpreprint) papers according to keywords. 
 
 
-**Purpose:** A bot that chekcs what was published the day before and tweets them if some keywords are found in the abstract. Ideally, you should set a crontab for a scheduled activation and tweeting in a server. Alternatively, just run it everyday :(
+**Purpose:** A bot that checks what papers were published the day before and tweets them if some keywords are found in the abstract. Ideally, you should set a crontab for a scheduled activation and tweeting in a server. Alternatively, just run it everyday :(
 
 ## Set up
 
@@ -15,4 +15,4 @@ A twitter bot from [@MiriukaLab](https://twitter.com/MiriukaLab) for filtering j
 
 
 
-### Authors: Felipe Miriuka and Santiago Miriuka
+#### Authors: Felipe Miriuka and Santiago Miriuka
