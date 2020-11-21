@@ -8,26 +8,36 @@ import time
 
 def search_and_tweet():
      get_papers()
-     now = read_from_database()
+     now, k_now = read_from_database()
+     # print(now)
+     # print('\n')
      api = tweet_login()
-     for line in now:
-          doi = line[0]
-          title = line[1]
-          version = line[2]
+     for line in k_now:
+          matched_kw = line[0]
+          tu = list(line[1])
+          doi = tu[0]
+          title = tu[1]
+          version = tu[2]
           link = "https://www.biorxiv.org/content/" + doi +'v' + version
-          n_char = len(title) + len(link)
+          n_char = len(matched_kw) + len(link)
+          message = 'Keywords'
           if n_char > 139:
-               max_title_length = 106 - len(link)
-               _title = title[:max_title_length]
-               final_title = _title + '...'
+               matched_kw_length = 136 - len(link) - len(message)
+               _matched_kw = matched_kw[:matched_kw_length]
+               final_matched_kw = _matched_kw + '...'
           else:
-               final_title = title
+               final_matched_kw = matched_kw
           with open('temp.txt', 'w') as f:
-               f.write(final_title + '\n' + link)
+               f.write(message + '\n' + final_matched_kw + '\n' + link)
           with open('temp.txt', 'r') as f:
                     api.update_status(f.read())
-          f.close()
+          # f.close()
+          print(final_matched_kw)
+          print(link)
+
+
           time.sleep(1)
+
 
 
 if __name__ == '__main__':

@@ -56,16 +56,16 @@ def load_keywords():
                     prelowline = line.replace(') AND (', ' XXXX ')
                     prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%')
                     prelowline = prelowline.replace(' XXXX ', '%\') AND (abstract LIKE \'%')
-                    lowline.append(prelowline)
+                    lowline.append([line, prelowline])
                elif ') OR (' in line:
                     prelowline = line.replace(') OR (', ' XXXX ')
                     prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%')
                     prelowline = prelowline.replace(' XXXX ', '%\') OR (abstract LIKE \'%')
-                    lowline.append(prelowline)
+                    lowline.append([line, prelowline])
                else:
                     prelowline = line.replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%')
                     prelowline = 'abstract LIKE \'%' + prelowline + '%\''
-                    lowline.append(prelowline)
+                    lowline.append([line, prelowline])
           return lowline
 
 
@@ -74,10 +74,14 @@ def read_from_database():
      cursor = connection.cursor()
      keywords = load_keywords()
      for k in keywords:
-          sql = "SELECT doi,title,version FROM yesterday_pubs WHERE " + k + 'COLLATE NOCASE'
+          sql = "SELECT doi,title,version FROM yesterday_pubs WHERE " + k[1] + 'COLLATE NOCASE'
           cursor.execute(sql)
           retrived = cursor.fetchall()
-     return retrived
+          key_retrived = []
+          for i in retrived:
+               key_re = [k[0], i]
+               key_retrived.append(key_re)
+     return retrived, key_retrived
 
 
 def tweet_login():
