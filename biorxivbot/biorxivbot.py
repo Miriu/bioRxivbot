@@ -1,24 +1,9 @@
 import requests
 from datetime import date, timedelta
 import sqlite3
-from utils import read_from_database, get_papers
+from utils import read_from_database, get_papers, tweet_login
 import tweepy
 import time
-
-
-def tweet_login():
-     creds = []
-     with open('credentials.txt') as f:
-          creds = [i.strip() for i in f.readlines()]
-          auth = tweepy.OAuthHandler(creds[0], creds[1])
-          auth.set_access_token(creds[2], creds[3])
-          api = tweepy.API(auth, wait_on_rate_limit=True,
-                              wait_on_rate_limit_notify=True)
-          try:
-               api.verify_credentials()
-               print("Authentication OK")
-          except:
-               print("Error during authentication")
 
 
 def search_and_tweet():
@@ -39,11 +24,11 @@ def search_and_tweet():
                final_title = title
           with open('temp.txt', 'w') as f:
                f.write(final_title + '\n' + link)
-          try:
-               with open('temp.txt', 'r') as f:
+          with open('temp.txt', 'r') as f:
                     api.update_status(f.read())
-                    f.close()
-          except:
-               pass
+          f.close()
           time.sleep(1)
 
+
+if __name__ == '__main__':
+     search_and_tweet()
