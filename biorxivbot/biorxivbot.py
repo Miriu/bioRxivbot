@@ -1,10 +1,9 @@
-import requests
-from datetime import date, timedelta
-import sqlite3
-from utils import read_from_database, get_papers, tweet_login
-import tweepy
+#!/usr/bin/env python
+
 import time
 import logging
+from datetime import date, timedelta
+from utils import read_from_database, get_papers, tweet_login
 
 
 def search_and_tweet():
