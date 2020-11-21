@@ -27,14 +27,13 @@ def search_and_tweet():
                final_matched_kw = _matched_kw + '...'
           else:
                final_matched_kw = matched_kw
-          # with open('temp.txt', 'w') as f:
-          #      f.write(message + '\n' + final_matched_kw + '\n' + link)
-          # with open('temp.txt', 'r') as f:
-          #           api.update_status(f.read())
-          # f.close()
-          print(message + '\n' + final_matched_kw + '\n' + link)
+          with open('temp.txt', 'w') as f:
+               f.write(message + '\n' + final_matched_kw + '\n' + link)
+          with open('temp.txt', 'r') as f:
+                    api.update_status(f.read())
+          f.close()
           n_tweets += 1
-          time.sleep(5)
+          time.sleep(3)
      logging.info('Number of tweets today: %s', n_tweets)
 
 
