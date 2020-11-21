@@ -11,28 +11,33 @@ def search_and_tweet():
      k_now = read_from_database()
      api = tweet_login()
      n_tweets = 0
+     dois = []
      for line in k_now:
           matched_kw = line[0]
           tu = list(line[1])
           doi = tu[0]
           title = tu[1]
           version = tu[2]
-          link = "https://www.biorxiv.org/content/" + doi +'v' + version
-          n_char = len(matched_kw) + len(link)
-          message = 'Keywords'
-          if n_char > 139:
-               matched_kw_length = 136 - len(link) - len(message)
-               _matched_kw = matched_kw[:matched_kw_length]
-               final_matched_kw = _matched_kw + '...'
+          if doi in dois:
+               continue
           else:
-               final_matched_kw = matched_kw
-          with open('temp.txt', 'w') as f:
-               f.write(message + '\n' + final_matched_kw + '\n' + link)
-          with open('temp.txt', 'r') as f:
-                    api.update_status(f.read())
-          f.close()
-          n_tweets += 1
-          time.sleep(3)
+               dois.append(doi)
+               link = "https://www.biorxiv.org/content/" + doi +'v' + version
+               n_char = len(matched_kw) + len(link)
+               message = 'Keywords'
+               if n_char > 139:
+                    matched_kw_length = 136 - len(link) - len(message)
+                    _matched_kw = matched_kw[:matched_kw_length]
+                    final_matched_kw = _matched_kw + '...'
+               else:
+                    final_matched_kw = matched_kw
+               with open('temp.txt', 'w') as f:
+                    f.write(message + '\n' + final_matched_kw + '\n' + link)
+               with open('temp.txt', 'r') as f:
+                         api.update_status(f.read())
+               f.close()
+               n_tweets += 1
+               time.sleep(3)
      logging.info('Number of tweets today: %s', n_tweets)
 
 
