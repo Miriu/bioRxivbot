@@ -31,13 +31,8 @@ def search_and_tweet():
                f.write(message + '\n' + final_matched_kw + '\n' + link)
           with open('temp.txt', 'r') as f:
                     api.update_status(f.read())
-          # f.close()
-          print(final_matched_kw)
-          print(link)
-
-
+          f.close()
           time.sleep(1)
-
 
 
 if __name__ == '__main__':
