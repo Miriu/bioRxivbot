@@ -3,8 +3,13 @@ from datetime import date, timedelta
 import sqlite3
 import math
 import tweepy
+import logging
+
 
 def get_papers():
+     logging.basicConfig(filename='activity.log', format='%(asctime)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
+                          filemode='w', level=logging.DEBUG)
+     logging.info('Start with get_papers')
      today = date.today()
      yesterday = today - timedelta(days = 1)
      papers = requests.get("https://api.biorxiv.org/details/biorxiv/" + str(yesterday) + "/" + str(yesterday))
@@ -46,6 +51,7 @@ def get_papers():
                                    child['category'],child['abstract'],child['published'],child['server']))
                connection.commit()
                start += 100
+     logging.info('Got papers OK')
 
 def load_keywords():
      with open('search.txt') as f:
@@ -66,6 +72,7 @@ def load_keywords():
                     prelowline = line.replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%')
                     prelowline = 'abstract LIKE \'%' + prelowline + '%\''
                     lowline.append([line, prelowline])
+          logging.info('Keywords OK')
           return lowline
 
 
@@ -81,8 +88,9 @@ def read_from_database():
           for i in retrived:
                key_re = [k[0], i]
                key_retrived.append(key_re)
-     return retrived, key_retrived
-
+     if not key_retrived:
+          logging.info('No papers matching keywords were found today')
+     return key_retrived
 
 def tweet_login():
      creds = []
@@ -94,7 +102,7 @@ def tweet_login():
                               wait_on_rate_limit_notify=True)
           try:
                api.verify_credentials()
-               print("Authentication OK")
+               logging.info("Authentication OK")
           except:
-               print("Error during authentication")
+               logging.critical("Error during authentication")
           return api
