@@ -13,6 +13,7 @@ def get_papers():
      today = date.today()
      yesterday = today - timedelta(days = 1)
      papers = requests.get("https://api.biorxiv.org/details/biorxiv/" + str(yesterday) + "/" + str(yesterday))
+     logging.info('First Request: %s', "https://api.biorxiv.org/details/biorxiv/" + str(yesterday) + "/" + str(yesterday))
      papers_dic = papers.json()
      connection = None
      connection = sqlite3.connect('tweetbot.db')
@@ -31,6 +32,7 @@ def get_papers():
      connection.commit()
      pap = papers_dic['messages']
      pepe = pap[0]
+     logging.info('Messaging from bioRxiv: %s', pepe)
      for key,value in pepe.items():
           if key == 'total':
                n_papers =  value
@@ -39,7 +41,7 @@ def get_papers():
           start = 101
           for n in range(total_loops):
                papers = requests.get("https://api.biorxiv.org/details/biorxiv/" + str(yesterday) + "/" + str(yesterday) + '/' + str(start))
-               start += 100
+               logging.info('Next Request: %s', "https://api.biorxiv.org/details/biorxiv/" + str(yesterday) + "/" + str(yesterday) + '/' + str(start))
                papers_dic = papers.json()
                connection = sqlite3.connect('tweetbot.db')
                cursor = connection.cursor()
