@@ -82,16 +82,16 @@ def read_from_database():
      connection = sqlite3.connect('tweetbot.db')
      cursor = connection.cursor()
      keywords = load_keywords()
+     key_retrived = []
      for k in keywords:
           sql = "SELECT doi,title,version FROM yesterday_pubs WHERE " + k[1] + 'COLLATE NOCASE'
           cursor.execute(sql)
           retrived = cursor.fetchall()
-          key_retrived = []
           for i in retrived:
                key_re = [k[0], i]
                key_retrived.append(key_re)
-     if not key_retrived:
-          logging.info('No papers matching keywords were found today')
+          if not key_retrived:
+               logging.info('No papers matching keywords were found today')
      return key_retrived
 
 def tweet_login():

@@ -22,22 +22,23 @@ def search_and_tweet():
                continue
           else:
                dois.append(doi)
-               link = "https://www.biorxiv.org/content/" + doi +'v' + version
-               n_char = len(matched_kw) + len(link)
-               message = 'Keywords'
-               if n_char > 139:
-                    matched_kw_length = 136 - len(link) - len(message)
-                    _matched_kw = matched_kw[:matched_kw_length]
-                    final_matched_kw = _matched_kw + '...'
-               else:
-                    final_matched_kw = matched_kw
-               with open('temp.txt', 'w') as f:
-                    f.write(message + '\n' + final_matched_kw + '\n' + link)
-               with open('temp.txt', 'r') as f:
-                         api.update_status(f.read())
-               f.close()
-               n_tweets += 1
-               time.sleep(3)
+          link = "https://www.biorxiv.org/content/" + doi +'v' + version
+          n_char = len(matched_kw) + len(link)
+          message = 'Keywords'
+          if n_char > 139:
+               matched_kw_length = 136 - len(link) - len(message)
+               _matched_kw = matched_kw[:matched_kw_length]
+               final_matched_kw = _matched_kw + '...'
+          else:
+               final_matched_kw = matched_kw
+          with open('temp.txt', 'w') as f:
+               f.write(message + '\n' + final_matched_kw + '\n' + link)
+          with open('temp.txt', 'r') as f:
+                    api.update_status(f.read())
+          f.close()
+          print(message + '\n' + final_matched_kw + '\n' + link)
+          n_tweets += 1
+          time.sleep(1)
      logging.info('Number of tweets today: %s', n_tweets)
 
 
