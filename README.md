@@ -5,6 +5,21 @@ A twitter bot from [@MiriukaLab](https://twitter.com/MiriukaLab) for filtering j
 
 **Purpose:** A bot that checks what papers were published the day before and tweets them if some keywords are found in the abstract. Ideally, you should set a crontab for a scheduled activation and tweeting in a server. Alternatively, just run it everyday :(
 
+## Installation
+
+
+```bash
+git clone https://github.com/Miriu/bioRxivbot.git
+```
+
+### Dependencies
+
+* python >=3.7
+* Tweepy >= 3.9.0
+* requests >= 2.25.0
+
+Not checked in older versions. 
+
 ## Set up
 
 1. Create a twitter account. 
