@@ -36,7 +36,6 @@ def search_and_tweet():
           with open('temp.txt', 'r') as f:
                     api.update_status(f.read())
           f.close()
-          print(message + '\n' + final_matched_kw + '\n' + link)
           n_tweets += 1
           time.sleep(1)
      logging.info('Number of tweets today: %s', n_tweets)
