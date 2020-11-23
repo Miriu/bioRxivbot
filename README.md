@@ -24,10 +24,10 @@ Not checked in older versions.
 
 1. Create a twitter account. 
 2. Apply for a [developers twitter account](https://developer.twitter.com/en)
-3. Get the four long complex weird keys and add them to the credential.txt file. Replace the fake ones provided. 
-4. The idea is that your bot will tweet what you are interested in. So, write down your keywords in the search.txt file. For example, you can write *(pluripotent stem cell OR embryonic stem cell) AND (microRNA OR miRNA)*. Note that the search is case-insensitive.
-5. [crontab](https://man7.org/linux/man-pages/man5/crontab.5.html) it to activate it, i.e., every morning and check any new interesting paper with breakfast.
+3. Get the four long complex weird keys and add them to the **credential.txt** file. Replace the fake ones provided. 
+4. The idea is that your bot will tweet what you are interested in. So, write down your keywords in the **search.txt** file. For example, you can write __*(pluripotent stem cell OR embryonic stem cell) AND (microRNA OR miRNA)*__. Note that the search is case-insensitive.
+5. [crontab](https://man7.org/linux/man-pages/man5/crontab.5.html) it to activate it, i.e., every morning and check any new interesting paper posted in bioRxiv with breakfast.
 
 
 
-#### Authors: Felipe Miriuka and Santiago Miriuka
+#### Authors: [Felipe Miriuka](https://github.com/Miriu/) and [Santiago Miriuka](https://github.com/sgmiriuka/)

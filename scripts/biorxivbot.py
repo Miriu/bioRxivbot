@@ -23,10 +23,10 @@ def search_and_tweet():
           else:
                dois.append(doi)
           link = "https://www.biorxiv.org/content/" + doi +'v' + version
-          n_char = len(matched_kw) + len(link)
+          n_char = len(matched_kw)
           message = 'Keywords'
-          if n_char > 139:
-               matched_kw_length = 136 - len(link) - len(message)
+          if n_char > 117:
+               matched_kw_length = 117 - len(message)
                _matched_kw = matched_kw[:matched_kw_length]
                final_matched_kw = _matched_kw + '...'
           else:

@@ -58,7 +58,7 @@ def get_papers():
 
 def load_keywords():
      cwd = os.getcwd()
-     with open(cwd + 'search.txt') as f:
+     with open(cwd + '/search.txt') as f:
           lines = [i.strip() for i in f.readlines()]
           lowline = []
           for line in lines:
@@ -99,7 +99,7 @@ def read_from_database():
 def tweet_login():
      creds = []
      cwd = os.getcwd()
-     with open(cwd + 'credentials.txt') as f:
+     with open(cwd + '/credentials.txt') as f:
           creds = [i.strip() for i in f.readlines()]
           auth = tweepy.OAuthHandler(creds[0], creds[1])
           auth.set_access_token(creds[2], creds[3])
