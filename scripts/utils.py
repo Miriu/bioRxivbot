@@ -4,6 +4,7 @@ import sqlite3
 import math
 import tweepy
 import logging
+import os
 
 
 def get_papers():
@@ -56,7 +57,8 @@ def get_papers():
      logging.info('Got papers OK')
 
 def load_keywords():
-     with open('search.txt') as f:
+     cwd = os.getcwd()
+     with open(cwd + 'search.txt') as f:
           lines = [i.strip() for i in f.readlines()]
           lowline = []
           for line in lines:
@@ -96,7 +98,8 @@ def read_from_database():
 
 def tweet_login():
      creds = []
-     with open('credentials.txt') as f:
+     cwd = os.getcwd()
+     with open(cwd + 'credentials.txt') as f:
           creds = [i.strip() for i in f.readlines()]
           auth = tweepy.OAuthHandler(creds[0], creds[1])
           auth.set_access_token(creds[2], creds[3])
