@@ -3,15 +3,22 @@ __pycache__/
 *$py.class
 
 # ours
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-.ipynb_checkpoints
-.vscode
+.ipynb_checkpoints/*
+__pycache__
 *.ipynb
 biorxivbot/*.db
 tweetbot.db
 temp.txt
 activity.log
-*.db
+./*.db
+
 
 # C extensions
 *.so

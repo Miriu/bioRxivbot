@@ -1,6 +1,0 @@
-(pluripotent stem cells OR embryonic stem cells) AND (cardiomyocytes OR cardio* OR cardiac differentiation)
-(pluripotent stem cells OR embryonic stem cells) AND (microRNA OR miRNA OR lncRNA or lon-non-codingRNA or non-coding RNA OR circRNA)
-(pluripotent stem cells OR embryonic stem cells) AND (microfluidics)
-(pluripotent stem cells OR embryonic stem cells) AND (gastrulation OR tbx6 OR oct-6 OR oct6)
-C19MC OR Chromosome 19 microRNA cluster OR Chromosome 19 miRNA cluster
-pluripotent stem cells OR embryonic stem cell
