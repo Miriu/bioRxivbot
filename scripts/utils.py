@@ -64,16 +64,21 @@ def load_keywords():
           for line in lines:
                if ') AND (' in line:
                     prelowline = line.replace(') AND (', ' XXXX ')
-                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%')
+                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' AND abstract LIKE \'%')
                     prelowline = prelowline.replace(' XXXX ', '%\') AND (abstract LIKE \'%')
                     lowline.append([line, prelowline])
                elif ') OR (' in line:
                     prelowline = line.replace(') OR (', ' XXXX ')
-                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%')
+                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' AND abstract LIKE \'%')
                     prelowline = prelowline.replace(' XXXX ', '%\') OR (abstract LIKE \'%')
                     lowline.append([line, prelowline])
+               elif ') OR (' in line:
+                    prelowline = line.replace(') NOT (', ' XXXX ')
+                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' AND abstract LIKE \'%')
+                    prelowline = prelowline.replace(' XXXX ', '%\') NOT (abstract LIKE \'%')
+                    lowline.append([line, prelowline])
                else:
-                    prelowline = line.replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%')
+                    prelowline = line.replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' AND abstract LIKE \'%')
                     prelowline = 'abstract LIKE \'%' + prelowline + '%\''
                     lowline.append([line, prelowline])
           logging.info('Keywords OK')
