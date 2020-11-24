@@ -1,7 +1,7 @@
-(pluripotent stem cell OR embryonic stem cell) AND (cardiomyocyte OR cardio* OR cardiac differentiation)
+(pluripotent stem cell OR embryonic stem cell) AND (cardiomyocyte OR cardio OR cardiac differentiation)
 (pluripotent stem cell OR embryonic stem cell) AND (microRNA OR miRNA OR lncRNA OR non-coding RNA OR circRNA)
 (pluripotent stem cell OR embryonic stem cell) AND (microfluidic)
-(pluripotent stem cell OR embryonic stem cell) AND (tbx-6 OR tbx6 OR oct-6 OR oct6 OR jup1 OR jup1 OR eomes OR brachyury)
+(pluripotent stem cell OR embryonic stem cell) AND (tbx-6 OR tbx6 OR oct-6 OR oct6 OR jup1 OR jup-1 OR eomes OR brachyury)
 (pluripotent stem cell OR embryonic stem cell) AND (gastrulation OR primitive line OR mesoderm OR mesoendoderm)
 C19MC OR Chromosome 19 microRNA cluster OR Chromosome 19 miRNA cluster
 (pluripotent stem cells OR embryonic stem cells) AND (exosome OR microvesicle)

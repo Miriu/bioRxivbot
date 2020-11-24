@@ -7,6 +7,9 @@ from utils import read_from_database, get_papers, tweet_login
 
 
 def search_and_tweet():
+     '''
+     Search papers, filter them, and tweet. 
+     '''
      get_papers()
      k_now = read_from_database()
      api = tweet_login()

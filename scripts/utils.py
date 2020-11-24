@@ -8,6 +8,9 @@ import os
 
 
 def get_papers():
+     '''
+     Gets papers from bioRxiv API and creates an SQL table with them. 
+     '''
      logging.basicConfig(filename='activity.log', format='%(asctime)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
                           filemode='w', level=logging.DEBUG)
      logging.info('Start with get_papers')
@@ -57,6 +60,9 @@ def get_papers():
      logging.info('Got papers OK')
 
 def load_keywords():
+     '''
+     Read keywords from serach.txt file and converts them into a LIKE sqlite3 search. 
+     '''
      cwd = os.getcwd()
      with open(cwd + '/search.txt') as f:
           lines = [i.strip() for i in f.readlines()]
@@ -64,21 +70,21 @@ def load_keywords():
           for line in lines:
                if ') AND (' in line:
                     prelowline = line.replace(') AND (', ' XXXX ')
-                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' AND abstract LIKE \'%')
+                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' abstract NOT LIKE \'%')
                     prelowline = prelowline.replace(' XXXX ', '%\') AND (abstract LIKE \'%')
                     lowline.append([line, prelowline])
                elif ') OR (' in line:
                     prelowline = line.replace(') OR (', ' XXXX ')
-                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' AND abstract LIKE \'%')
+                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' abstract NOT  LIKE \'%')
                     prelowline = prelowline.replace(' XXXX ', '%\') OR (abstract LIKE \'%')
                     lowline.append([line, prelowline])
                elif ') OR (' in line:
                     prelowline = line.replace(') NOT (', ' XXXX ')
-                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' AND abstract LIKE \'%')
-                    prelowline = prelowline.replace(' XXXX ', '%\') NOT (abstract LIKE \'%')
+                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' abstract NOT LIKE \'%')
+                    prelowline = prelowline.replace(' XXXX ', '%\') AND (abstract NOT LIKE \'%')
                     lowline.append([line, prelowline])
                else:
-                    prelowline = line.replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' AND abstract LIKE \'%')
+                    prelowline = line.replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' abstract NOT LIKE \'%')
                     prelowline = 'abstract LIKE \'%' + prelowline + '%\''
                     lowline.append([line, prelowline])
           logging.info('Keywords OK')
@@ -86,6 +92,9 @@ def load_keywords():
 
 
 def read_from_database():
+     '''
+     Read keywords in abstract and retrived matched papers.
+     '''
      connection = sqlite3.connect('tweetbot.db')
      cursor = connection.cursor()
      keywords = load_keywords()
@@ -102,6 +111,9 @@ def read_from_database():
      return key_retrived
 
 def tweet_login():
+     '''
+     Log in to twitter account; access granted by codes provded in credential.txt file.
+     '''
      creds = []
      cwd = os.getcwd()
      with open(cwd + '/credentials.txt') as f:
