@@ -37,7 +37,7 @@ def search_and_tweet():
                     api.update_status(f.read())
           f.close()
           n_tweets += 1
-          time.sleep(1)
+          time.sleep(5)
      logging.info('Number of tweets today: %s', n_tweets)
 
 

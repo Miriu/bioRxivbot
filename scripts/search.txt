@@ -1,14 +1,17 @@
-(pluripotent stem cell OR embryonic stem cell) AND (cardiomyocyte OR cardio* OR cardiac differentiation)
-(pluripotent stem cell OR embryonic stem cell) AND (microRNA OR miRNA OR lncRNA OR non-coding RNA OR circRNA)
-(pluripotent stem cell OR embryonic stem cell) AND (microfluidic)
-(pluripotent stem cell OR embryonic stem cell) AND (tbx-6 OR tbx6 OR oct-6 OR oct6 OR jup1 OR jup1 OR eomes OR brachyury)
+(pluripotent stem cell OR embryonic stem cell) AND (cardiomyocyte OR cardio OR cardiac differentiation)
+(pluripotent stem cell OR embryonic stem cell) AND (microRNA OR miRNA OR ncRNA OR non-coding RNA OR circRNA)
+(pluripotent stem cell OR embryonic stem cell) AND microfluidic
+(pluripotent stem cell OR embryonic stem cell) AND micropattern
+(pluripotent stem cell OR embryonic stem cell) AND (tbx-6 OR tbx6 OR oct-6 OR oct6 OR jup-1 OR jup1 OR eomes OR brachyury)
 (pluripotent stem cell OR embryonic stem cell) AND (gastrulation OR primitive line OR mesoderm OR mesoendoderm)
 C19MC OR Chromosome 19 microRNA cluster OR Chromosome 19 miRNA cluster
 (pluripotent stem cells OR embryonic stem cells) AND (exosome OR microvesicle)
-(pluripotent stem cells OR embryonic stem cells) AND (cell reprogramming)
+(pluripotent stem cells OR embryonic stem cells) AND (cell reprogramming)∑
 (pluripotent stem cells OR embryonic stem cells) AND (cas13 OR CrisprRNA)
 cas13 OR crisprRNA OR RNAcrispr
 (mesenchymal stem cell) AND (exosome OR microvesicle)
 bioprinting
-(Artificial Intelligence OR deep learning OR machine learning) AND cancer
-(Artificial Intelligence OR deep learning OR machine learning) AND (RNA-seq OR RNAseq OR sequencing)
+(Artificial Intelligence OR deep learning OR machine learning) AND (cancer OR tumor)
+(Artificial Intelligence OR deep learning OR machine learning) AND (cardiovascular OR cardiac OR cardio OR myocardial infarction OR heart failure)
+(Artificial Intelligence OR deep learning OR machine learning) AND (RNA-seq OR RNAseq OR sequencing OR transcriptom)
+(cardiovascular OR cardiac OR cardio OR myocardial infarction OR heart failure) AND (RNA-seq OR RNAseq OR sequencing OR transcriptom)

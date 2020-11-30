@@ -8,7 +8,8 @@ import os
 
 
 def get_papers():
-     logging.basicConfig(filename='activity.log', format='%(asctime)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
+     cwd =  os.getcwd()
+     logging.basicConfig(filename= cwd + '/bioRxivbot/scripts/activity.log', format='%(asctime)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
                           filemode='w', level=logging.DEBUG)
      logging.info('Start with get_papers')
      today = date.today()
@@ -17,7 +18,7 @@ def get_papers():
      logging.info('First Request: %s', "https://api.biorxiv.org/details/biorxiv/" + str(yesterday) + "/" + str(yesterday))
      papers_dic = papers.json()
      connection = None
-     connection = sqlite3.connect('tweetbot.db')
+     connection = sqlite3.connect(cwd + '/bioRxivbot/scripts/tweetbot.db')
      cursor = connection.cursor()
      cursor.execute('''DROP TABLE if exists yesterday_pubs''')
      cursor.execute('''CREATE TABLE 'yesterday_pubs'
@@ -57,31 +58,42 @@ def get_papers():
      logging.info('Got papers OK')
 
 def load_keywords():
+     '''
+     Read keywords from serach.txt file and converts them into a LIKE sqlite3 search. 
+     '''
      cwd = os.getcwd()
-     with open(cwd + '/search.txt') as f:
+     with open(cwd + '/bioRxivbot/scripts/search.txt') as f:
           lines = [i.strip() for i in f.readlines()]
           lowline = []
           for line in lines:
                if ') AND (' in line:
                     prelowline = line.replace(') AND (', ' XXXX ')
-                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%')
+                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' abstract NOT LIKE \'%')
                     prelowline = prelowline.replace(' XXXX ', '%\') AND (abstract LIKE \'%')
                     lowline.append([line, prelowline])
                elif ') OR (' in line:
                     prelowline = line.replace(') OR (', ' XXXX ')
-                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%')
+                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' abstract NOT  LIKE \'%')
                     prelowline = prelowline.replace(' XXXX ', '%\') OR (abstract LIKE \'%')
                     lowline.append([line, prelowline])
+               elif ') OR (' in line:
+                    prelowline = line.replace(') NOT (', ' XXXX ')
+                    prelowline = prelowline.replace('(', '(abstract LIKE \'%').replace(')', '%\')').replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' abstract NOT LIKE \'%')
+                    prelowline = prelowline.replace(' XXXX ', '%\') AND (abstract NOT LIKE \'%')
+                    lowline.append([line, prelowline])
                else:
-                    prelowline = line.replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%')
+                    prelowline = line.replace(' OR ', '%\' OR abstract LIKE \'%').replace(' AND ', '%\' AND abstract LIKE \'%').replace(' NOT ', '%\' abstract NOT LIKE \'%')
                     prelowline = 'abstract LIKE \'%' + prelowline + '%\''
                     lowline.append([line, prelowline])
           logging.info('Keywords OK')
           return lowline
 
-
 def read_from_database():
-     connection = sqlite3.connect('tweetbot.db')
+     '''
+     Read keywords in abstract and retrived matched papers.
+     '''
+     cwd = os.getcwd()
+     connection = sqlite3.connect(cwd + '/bioRxivbot/scripts/tweetbot.db')
      cursor = connection.cursor()
      keywords = load_keywords()
      key_retrived = []
@@ -99,7 +111,7 @@ def read_from_database():
 def tweet_login():
      creds = []
      cwd = os.getcwd()
-     with open(cwd + '/credentials.txt') as f:
+     with open(cwd + '/bioRxivbot/scripts/credentials.txt') as f:
           creds = [i.strip() for i in f.readlines()]
           auth = tweepy.OAuthHandler(creds[0], creds[1])
           auth.set_access_token(creds[2], creds[3])
