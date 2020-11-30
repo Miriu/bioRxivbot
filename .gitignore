@@ -9,7 +9,7 @@ __pycache__/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
+settings.json
 .ipynb_checkpoints/*
 __pycache__
 *.ipynb

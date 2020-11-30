@@ -8,6 +8,9 @@ import os
 
 
 def get_papers():
+     '''
+     Gets papers from bioRxiv API and creates an SQL table with them. 
+     '''
      cwd =  os.getcwd()
      logging.basicConfig(filename= cwd + '/bioRxivbot/scripts/activity.log', format='%(asctime)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
                           filemode='w', level=logging.DEBUG)
@@ -109,6 +112,9 @@ def read_from_database():
      return key_retrived
 
 def tweet_login():
+     '''
+     Log in to twitter account; access granted by codes provded in credential.txt file.
+     '''
      creds = []
      cwd = os.getcwd()
      with open(cwd + '/bioRxivbot/scripts/credentials.txt') as f:
