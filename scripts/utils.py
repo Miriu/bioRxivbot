@@ -11,8 +11,7 @@ def get_papers():
      '''
      Gets papers from bioRxiv API and creates an SQL table with them. 
      '''
-     cwd =  os.getcwd()
-     logging.basicConfig(filename= cwd + '/bioRxivbot/scripts/activity.log', format='%(asctime)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
+     logging.basicConfig(filename='activity.log', format='%(asctime)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
                           filemode='w', level=logging.DEBUG)
      logging.info('Start with get_papers')
      today = date.today()
@@ -21,7 +20,7 @@ def get_papers():
      logging.info('First Request: %s', "https://api.biorxiv.org/details/biorxiv/" + str(yesterday) + "/" + str(yesterday))
      papers_dic = papers.json()
      connection = None
-     connection = sqlite3.connect(cwd + '/bioRxivbot/scripts/tweetbot.db')
+     connection = sqlite3.connect('tweetbot.db')
      cursor = connection.cursor()
      cursor.execute('''DROP TABLE if exists yesterday_pubs''')
      cursor.execute('''CREATE TABLE 'yesterday_pubs'
@@ -65,7 +64,7 @@ def load_keywords():
      Read keywords from serach.txt file and converts them into a LIKE sqlite3 search. 
      '''
      cwd = os.getcwd()
-     with open(cwd + '/bioRxivbot/scripts/search.txt') as f:
+     with open(cwd + '/scripts/search.txt') as f:
           lines = [i.strip() for i in f.readlines()]
           lowline = []
           for line in lines:
@@ -91,17 +90,17 @@ def load_keywords():
           logging.info('Keywords OK')
           return lowline
 
+
 def read_from_database():
      '''
      Read keywords in abstract and retrived matched papers.
      '''
-     cwd = os.getcwd()
-     connection = sqlite3.connect(cwd + '/bioRxivbot/scripts/tweetbot.db')
+     connection = sqlite3.connect('tweetbot.db')
      cursor = connection.cursor()
      keywords = load_keywords()
      key_retrived = []
      for k in keywords:
-          sql = "SELECT doi,title,version FROM yesterday_pubs WHERE " + k[1] + 'COLLATE NOCASE'
+          sql = "SELECT doi,title,version FROM yesterday_pubs WHERE " + k[1] + "COLLATE NOCASE"
           cursor.execute(sql)
           retrived = cursor.fetchall()
           for i in retrived:
@@ -117,7 +116,7 @@ def tweet_login():
      '''
      creds = []
      cwd = os.getcwd()
-     with open(cwd + '/bioRxivbot/scripts/credentials.txt') as f:
+     with open(cwd + '/scripts/credentials.txt') as f:
           creds = [i.strip() for i in f.readlines()]
           auth = tweepy.OAuthHandler(creds[0], creds[1])
           auth.set_access_token(creds[2], creds[3])
@@ -129,3 +128,4 @@ def tweet_login():
           except:
                logging.critical("Error during authentication")
           return api
+
