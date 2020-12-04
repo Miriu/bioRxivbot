@@ -108,8 +108,9 @@ def read_from_database():
           for i in retrived:
                key_re = [k[0], i]
                key_retrived.append(key_re)
+               logging.info('Yes, got a paper.')
           if not key_retrived:
-               logging.info('No papers matching keywords were found today')
+               logging.info('No papers matching keywords were found today.')
      return key_retrived
 
 def tweet_login():
