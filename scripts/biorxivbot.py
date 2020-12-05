@@ -2,6 +2,7 @@
 
 import time
 import logging
+import os
 from datetime import date, timedelta
 from utils import read_from_database, get_papers, tweet_login
 
@@ -13,13 +14,12 @@ def search_and_tweet():
      get_papers()
      k_now = read_from_database()
      api = tweet_login()
-     n_tweets = 0
      dois = []
-     for line in k_now:
+     for n_tweets, line in enumerate(k_now):
           matched_kw = line[0]
           tu = list(line[1])
           doi = tu[0]
-          title = tu[1]
+          title = tu[1]  #not used so far
           version = tu[2]
           if doi in dois:
                continue
@@ -34,14 +34,14 @@ def search_and_tweet():
                final_matched_kw = _matched_kw + '...'
           else:
                final_matched_kw = matched_kw
-          with open('temp.txt', 'w') as f:
+          cwd = os.getcwd()
+          with open(cwd + '/bioRxivbot/scripts/temp.txt', 'w') as f:
                f.write(message + '\n' + final_matched_kw + '\n' + link)
-          with open('temp.txt', 'r') as f:
+          with open(cwd + '/bioRxivbot/scripts/temp.txt', 'r') as f:
                     api.update_status(f.read())
           f.close()
-          n_tweets += 1
           time.sleep(5)
-     logging.info('Number of tweets today: %s', n_tweets)
+     logging.info('Number of tweets today: %s', n_tweets + 1)
 
 
 if __name__ == '__main__':
