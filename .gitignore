@@ -18,7 +18,10 @@ tweetbot.db
 temp.txt
 activity.log
 ./*.db
-
+my_credentials.txt
+my_utils.py
+my_biorxivbot.py
+my_search.txt
 
 # C extensions
 *.so
