@@ -2,7 +2,7 @@
 
 A twitter bot from [@MiriukaLab](https://twitter.com/MiriukaLab) for filtering just published  [@bioRxivpreprint](https://twitter.com/biorxivpreprint) papers according to keywords. The first clon can be followed at [@BiorxivB](https://twitter.com/BiorxivB). 
 
-<img src="img.png" width="20" />
+<img src="img.png" width="300" />
 
 **Purpose:** A bot that checks bioRxiv papers published the day before and tweets them if provided keywords are found in the abstract. Ideally, you should set crontab in a server for a scheduled activation and tweeting. Alternatively, just run it everyday :(
 
