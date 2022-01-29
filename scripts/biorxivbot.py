@@ -44,6 +44,8 @@ def search_and_tweet():
                          api.update_status(f.read())
                f.close()
                time.sleep(5)
+          os.remove(os.path.join(cwd + '/bioRxivbot/scripts/temp.txt'))
+          logging.info('--> tmp file deleted')
           logging.info('Number of tweets today: %s', n_tweets + 1)
 
 
