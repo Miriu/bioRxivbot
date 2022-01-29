@@ -19,7 +19,7 @@ git clone https://github.com/Miriu/bioRxivbot.git
 * Tweepy=3.9.0
 * requests=2.25.0
 
-Not checked in different versions. 
+Not checked with different versions. 
 
 ## Set up
 
